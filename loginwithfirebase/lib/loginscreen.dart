@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:loginwithfirebase/const/commonbg.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -14,6 +16,8 @@ class Loginscreen extends StatefulWidget {
 }
 
 class _LoginscreenState extends State<Loginscreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,6 +35,7 @@ class _LoginscreenState extends State<Loginscreen> {
               Column(
                 children: [
                   TextFormField(
+                    controller: emailController,
                     decoration: const InputDecoration(
                         hintText: 'Hassan@gmai.com',
                         hintStyle: TextStyle(
@@ -40,6 +45,7 @@ class _LoginscreenState extends State<Loginscreen> {
                   ),
                   20.heightBox,
                   TextFormField(
+                    controller: passwordController,
                     decoration: const InputDecoration(
                         hintText: '*******',
                         hintStyle: TextStyle(

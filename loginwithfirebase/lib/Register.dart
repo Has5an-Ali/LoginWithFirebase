@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:get/get.dart';
+import 'loginscreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -9,15 +13,18 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           image: DecorationImage(image: AssetImage("assets/images/bg.png"))),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Padding(
-          padding: const EdgeInsets.only(top: 160),
+          padding: const EdgeInsets.only(top: 100),
           child: Column(
             children: [
               (context.screenHeight * 0.1).heightBox,
@@ -28,9 +35,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   .make(),
               20.heightBox,
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  "Name".text.make(),
                   TextFormField(
-                    decoration: InputDecoration(
+                    controller: nameController,
+                    decoration: const InputDecoration(
                         hintText: 'Hassan Ali',
                         hintStyle: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold),
@@ -38,8 +48,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             borderRadius: BorderRadius.zero)),
                   ),
                   20.heightBox,
+                  "Email".text.make(),
                   TextFormField(
-                    decoration: InputDecoration(
+                    controller: emailController,
+                    decoration: const InputDecoration(
                         hintText: 'Hassan@gmai.com',
                         hintStyle: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold),
@@ -47,8 +59,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             borderRadius: BorderRadius.zero)),
                   ),
                   20.heightBox,
+                  "Password".text.make(),
                   TextFormField(
-                    decoration: InputDecoration(
+                    controller: passwordController,
+                    decoration: const InputDecoration(
                         hintText: '*******',
                         hintStyle: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold),
@@ -56,32 +70,65 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             borderRadius: BorderRadius.zero)),
                   ),
                   20.heightBox,
-                  SizedBox(
-                    height: 50,
-                    width: 250,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.zero)),
-                        onPressed: () {},
-                        child:
-                            "Login".text.size(22).color(Colors.white).make()),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30),
+                    child: SizedBox(
+                      height: 50,
+                      width: 250,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red,
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.zero)),
+                          onPressed: () {
+                            var username = nameController.toString().trim();
+                            var useremail = emailController.toString().trim();
+                            var userpassword =
+                                passwordController.toString().trim();
+
+                            FirebaseAuth.instance
+                                .createUserWithEmailAndPassword(
+                                    email: useremail, password: userpassword)
+                                .then((value) => {
+                                      FirebaseFirestore.instance
+                                          .collection('user')
+                                          .doc()
+                                          .set({
+                                        'userName': username,
+                                        'userEmail': useremail,
+                                        'userPassword': userpassword
+                                      })
+                                    });
+                          },
+                          child: "Register"
+                              .text
+                              .size(22)
+                              .color(Colors.white)
+                              .make()),
+                    ),
                   ),
                   30.heightBox,
-                  "Don't Have Account Click Here".text.make(),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 35),
+                    child: "Don't Have Account Click Here".text.make(),
+                  ),
                   20.heightBox,
-                  SizedBox(
-                    height: 50,
-                    width: 250,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.zero)),
-                        onPressed: () {},
-                        child:
-                            "Sign up".text.size(22).color(Colors.white).make()),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30),
+                    child: SizedBox(
+                      height: 50,
+                      width: 250,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red,
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.zero)),
+                          onPressed: () {
+                            Get.to(() => const Loginscreen());
+                          },
+                          child:
+                              "Login".text.size(22).color(Colors.white).make()),
+                    ),
                   ),
                 ],
               )
@@ -89,8 +136,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           )
               .box
               .rounded
-              .padding(EdgeInsets.all(12))
-              .margin(EdgeInsets.all(8))
+              .padding(const EdgeInsets.all(12))
+              .margin(const EdgeInsets.all(8))
               .color(Colors.white)
               .width(context.screenWidth - 20)
               .make(),

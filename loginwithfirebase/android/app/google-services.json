@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "813063669201",
+    "project_id": "registerauth-5418a",
+    "storage_bucket": "registerauth-5418a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:813063669201:android:7e59b4d623d86847904cf0",
+        "android_client_info": {
+          "package_name": "com.example.com"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnIkZJlPWGZpEFZvzhkKImJcLruAnTm3E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:813063669201:android:a2a893fe39a141fe904cf0",
+        "android_client_info": {
+          "package_name": "com.example.loginwithfirebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnIkZJlPWGZpEFZvzhkKImJcLruAnTm3E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
